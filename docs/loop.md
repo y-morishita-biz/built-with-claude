@@ -1,7 +1,7 @@
 # 開発ループの詳細
 
 ## 提案(毎朝)
-- 定期実行で Claude が起動し、リポジトリの状態、未完了の Issue、`docs/ideas.md` を読む。
+- 定期実行で Claude が起動し、リポジトリの状態、未完了の Issue、`docs/project.md`、`docs/ideas.md` を読む。
 - 価値が高く小さい課題を最大3件選び、`proposal` ラベルの Issue を作る。
 - 判断カードで「採用 / 却下」を聞く。
 

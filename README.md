@@ -31,6 +31,16 @@
 
 詳細は [docs/loop.md](docs/loop.md) にあります。
 
+## 関連する作品
+
+- [everyday-knobs(まいにちのぶ)](https://y-morishita-biz.github.io/everyday-knobs/): ロータリーエンコーダ用のツマミをブラウザで設計し、STL / STEP で書き出せるジェネレーター。Claude Code と30日以上、1日1機能ずつ育てました
+- [dotting dots](https://dotting-dots.stores.jp/): 作者がデザインを担当しているキーボードとデスクトップガジェットのショップ
+
+## English summary
+
+A tool that lets anyone customize their keyboard's keymap just by describing what they want in plain Japanese. Claude proposes a keymap, explains what changed, and guides the user through writing it to the keyboard, starting with the dotmatrix40W wireless keyboard.
+Development runs on a loop where Claude Code proposes, implements and self-reviews every task, and the human only approves tasks and merges.
+
 ## リポジトリの構成
 
 | パス | 内容 |
