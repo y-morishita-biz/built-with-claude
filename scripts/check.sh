@@ -3,4 +3,5 @@
 set -euo pipefail
 test -f README.md
 test -f CLAUDE.md
+test -f docs/project.md
 echo "check: ok"
