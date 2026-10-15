@@ -8,9 +8,10 @@ done
 status=0
 while IFS= read -r md; do
   dir=$(dirname "$md")
-  for link in $(grep -oE '\]\([^)#:]+\)' "$md" | sed -E 's/^\]\((.*)\)$/\1/'); do
+  while IFS= read -r link; do
+    link=${link%% \"*}
     test -e "$dir/$link" || { echo "broken link in $md: $link"; status=1; }
-  done
+  done < <(grep -oE '\]\([^)#:]+\)' "$md" | sed -E 's/^\]\((.*)\)$/\1/' || true)
 done < <(git ls-files '*.md')
 [ "$status" -eq 0 ] && echo "check: ok"
 exit $status
