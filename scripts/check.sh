@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # CI とローカルで共通のチェック。コードが増えたらテストやリンターをここに足す。
 set -euo pipefail
+cd "$(dirname "$0")/.."
 for f in README.md CLAUDE.md docs/project.md docs/loop.md docs/ideas.md; do
   test -f "$f" || { echo "missing: $f"; exit 1; }
 done

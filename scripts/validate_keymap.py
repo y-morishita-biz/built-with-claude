@@ -19,11 +19,11 @@ KEYS = (
         "LANG1", "LANG2", "VOLU", "VOLD", "MUTE", "PLAY", "NEXT", "PREV",
     }
 )
-LAYER_FN = re.compile(r"(MO|TG)\((\d+)\)")
-LAYER_NAME = re.compile(r"[a-z][a-z-]*")
+LAYER_FN = re.compile(r"(MO|TG)\(([0-9]+)\)")
+LAYER_NAME = re.compile(r"[a-z][a-z0-9]*(-[a-z0-9]+)*")
 
 
-def check_key(key, n_layers, is_base):
+def check_key(key, n_layers, is_base, is_encoder=False):
     if not isinstance(key, str):
         return f"文字列ではない: {key!r}"
     if key == "TRANS":
@@ -32,13 +32,15 @@ def check_key(key, n_layers, is_base):
         return None
     m = LAYER_FN.fullmatch(key)
     if m:
+        if is_encoder:
+            return f"エンコーダにはレイヤー切り替えを割り当てられない: {key}"
         n = int(m.group(2))
         return None if 0 <= n < n_layers else f"レイヤー番号が範囲外: {key}"
     *mods, base = key.split("+")
     for mod in mods:
         if mod not in MODIFIERS:
             return f"修飾キーではない: {mod!r} ({key})"
-    if len(set(mods)) != len(mods):
+    if len(set(mods + [base])) != len(mods) + 1:
         return f"修飾キーが重複している: {key}"
     return None if base in KEYS else f"未知のキー名: {base!r} ({key})"
 
@@ -49,13 +51,17 @@ def validate(data):
     errors = []
     if data.get("keyboard") != "dotmatrix40w":
         errors.append("keyboard は dotmatrix40w のみ対応")
-    if data.get("version") != 1:
+    def is_int(v, n):
+        return type(v) is int and v == n
+
+    if not is_int(data.get("version"), 1):
         errors.append("version は 1 のみ対応")
-    if data.get("rows") != ROWS or data.get("cols") != COLS:
+    if not is_int(data.get("rows"), ROWS) or not is_int(data.get("cols"), COLS):
         errors.append(f"rows / cols は {ROWS} / {COLS} でなければならない")
     layers = data.get("layers")
     if not isinstance(layers, list) or not layers:
         return errors + ["layers が空、または配列ではない"]
+    seen_names = set()
     for i, layer in enumerate(layers):
         if not isinstance(layer, dict):
             errors.append(f"layers[{i}]: オブジェクトではない")
@@ -64,6 +70,9 @@ def validate(data):
         where = f"layers[{i}]({name})"
         if not isinstance(name, str) or not LAYER_NAME.fullmatch(name):
             errors.append(f"{where}: name は英小文字とハイフンのみ")
+        elif name in seen_names:
+            errors.append(f"{where}: name が重複している")
+        seen_names.add(name)
         keys = layer.get("keys")
         if (
             not isinstance(keys, list)
@@ -83,7 +92,7 @@ def validate(data):
             continue
         for d in ("cw", "ccw"):
             key = encoder.get(d)
-            err = "未設定" if key is None else check_key(key, len(layers), i == 0)
+            err = "未設定" if key is None else check_key(key, len(layers), i == 0, is_encoder=True)
             if err:
                 errors.append(f"{where} encoder.{d}: {err}")
     return errors
