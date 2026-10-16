@@ -49,7 +49,7 @@ Claude が作ったキーマップ([keymap-format.md](../keymap-format.md))を d
 
 ## 未確定(開催期間中に検証する)
 
-- `.vil` を Claude が生成したときに、そのまま import できるか(形式の細部)
+- `.vil` を Claude が生成したときに、そのまま import できるか(形式は [vil-format.md](../vil-format.md) で調べ済み)
 - BLE 接続のまま `.vil` を import できるか(USB では確認済み)
 - `keyboard.toml` から初期キーマップを変えてビルドする手順(リポジトリに `Makefile.toml` と手順あり)
 
