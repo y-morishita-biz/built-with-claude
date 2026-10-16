@@ -1,0 +1,17 @@
+name: PR rules
+# PR が採用済みの Issue に紐づき、Ready のときは AIレビュー欄が埋まっているかを確かめる
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft]
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  pr-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_pr.py "$GITHUB_EVENT_PATH"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

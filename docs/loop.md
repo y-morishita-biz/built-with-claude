@@ -9,6 +9,7 @@
 - 採用された Issue ごとにブランチ `issue-<番号>-<短い名前>` を作る。
 - ドラフトPR → `/code-review` → 修正 → CI グリーン → Ready for review。
 - CI の失敗やレビューコメントは PR 監視で自動対応する。
+- CI の `PR rules` が、本文の `Closes #番号` の Issue に `approved` ラベルがあるか、Ready の PR で「AIレビュー」欄がすべてチェックされているかを確かめる。Issue のラベルを後から付けたときは、PR の本文を保存し直すと再確認される。
 
 ## 段階的な拡張
 1. Issue に溜まったバグや TODO から提案の元ネタを自動で拾う。
