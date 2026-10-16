@@ -51,3 +51,7 @@ Development runs on a loop where Claude Code proposes, implements and self-revie
 | [CLAUDE.md](CLAUDE.md) | Claude Code 向けの作業ルール |
 | [.github/](.github/) | Issue / PR テンプレート、CI |
 | [scripts/check.sh](scripts/check.sh) | CI とローカルで共通のチェック |
+
+## ライセンス
+
+[MIT License](LICENSE)
