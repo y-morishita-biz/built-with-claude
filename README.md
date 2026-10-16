@@ -52,6 +52,7 @@ Development runs on a loop where Claude Code proposes, implements and self-revie
 | [data/](data/) | RMK のキー名一覧など、検証に使うデータ |
 | [docs/eval-cases.md](docs/eval-cases.md) | 日本語の依頼とキーマップ変更の評価例 |
 | [docs/decisions/](docs/decisions/) | 設計の判断記録 |
+| [docs/plan.md](docs/plan.md) | 開催期間 9 日間の作業計画 |
 | [docs/loop.md](docs/loop.md) | 開発ループの詳細 |
 | [docs/ideas.md](docs/ideas.md) | 提案の前提とアイデアメモ |
 | [CLAUDE.md](CLAUDE.md) | Claude Code 向けの作業ルール |
