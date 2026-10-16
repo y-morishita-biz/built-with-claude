@@ -1,0 +1,22 @@
+name: PR rules
+# PR が採用済みの Issue に紐づき、Ready のときは AIレビュー欄が埋まっているかを確かめる。
+# PR 側でスクリプトを書き換えて確認を外せないよう、pull_request_target で main 側のスクリプトを動かす。
+# PR のコードはチェックアウトも実行もしない(読むのはイベントの JSON だけ)。
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft]
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  pr-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - run: python3 scripts/check_pr.py "$GITHUB_EVENT_PATH"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

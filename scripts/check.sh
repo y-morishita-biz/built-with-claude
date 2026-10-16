@@ -18,5 +18,7 @@ done < <(git ls-files '*.md')
 python3 scripts/validate_keymap.py examples/*.json || status=1
 # .vil への対応表に、サンプルのキーが漏れなく載っているか確認する
 python3 scripts/check_vil_table.py examples/*.json || status=1
+# PR ルールの確認スクリプトが正しく判定するか確認する
+python3 scripts/test_check_pr.py || status=1
 [ "$status" -eq 0 ] && echo "check: ok"
 exit $status
