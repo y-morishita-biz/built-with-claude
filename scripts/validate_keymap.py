@@ -3,46 +3,64 @@
 import json
 import re
 import sys
+from pathlib import Path
 
-ROWS, COLS = 4, 12
-MODIFIERS = {"LCTRL", "LSHIFT", "LALT", "LGUI", "RCTRL", "RSHIFT", "RALT", "RGUI"}
-KEYS = (
-    {chr(c) for c in range(ord("A"), ord("Z") + 1)}
-    | {str(n) for n in range(10)}
-    | {f"F{n}" for n in range(1, 13)}
-    | MODIFIERS
-    | {
-        "ESC", "TAB", "SPACE", "ENTER", "BSPC", "DEL", "INS",
-        "LEFT", "RIGHT", "UP", "DOWN", "HOME", "END", "PGUP", "PGDN",
-        "MINUS", "EQUAL", "LBKT", "RBKT", "BSLH", "SEMI", "QUOTE", "GRAVE",
-        "COMMA", "DOT", "SLASH", "CAPS", "PSCRN",
-        "LANG1", "LANG2", "VOLU", "VOLD", "MUTE", "PLAY", "NEXT", "PREV",
-    }
-)
-LAYER_FN = re.compile(r"(MO|TG)\(([0-9]+)\)")
+# 実機の matrix_map に合わせた各行のキー数。最下段は (3,6) がないので 11
+ROW_LENGTHS = [12, 12, 12, 11]
+N_LAYERS = 5
+MODIFIERS = {"LCtrl", "LShift", "LAlt", "LGui", "RCtrl", "RShift", "RAlt", "RGui"}
+KEYCODES = {
+    line.strip()
+    for line in (Path(__file__).resolve().parent.parent / "data" / "rmk-keycodes.txt")
+    .read_text(encoding="utf-8")
+    .splitlines()
+    if line.strip() and not line.startswith("#")
+}
+LAYER_FN = re.compile(r"(MO|TG|TO|OSL)\(([0-9])\)")
+LT = re.compile(r"LT\(([0-9]), *([A-Za-z0-9]+)\)")
+WM = re.compile(r"WM\(([A-Za-z0-9]+), *([A-Za-z| ]+)\)")
+SHIFTED = re.compile(r"SHIFTED\(([A-Za-z0-9]+)\)")
 LAYER_NAME = re.compile(r"[a-z][a-z0-9]*(-[a-z0-9]+)*")
+
+
+def check_layer(n, n_layers, key):
+    return None if int(n) < n_layers else f"レイヤー番号が範囲外: {key}"
+
+
+def check_plain(code, key):
+    return None if code in KEYCODES else f"RMK にないキー名: {code!r} ({key})"
 
 
 def check_key(key, n_layers, is_base, is_encoder=False):
     if not isinstance(key, str):
         return f"文字列ではない: {key!r}"
-    if key == "TRANS":
-        return "ベースレイヤーでは TRANS を使えない" if is_base else None
-    if key == "NONE":
+    if key == "_":
+        return "ベースレイヤーでは _ を使えない" if is_base else None
+    if key == "No":
         return None
     m = LAYER_FN.fullmatch(key)
     if m:
         if is_encoder:
             return f"エンコーダにはレイヤー切り替えを割り当てられない: {key}"
-        n = int(m.group(2))
-        return None if 0 <= n < n_layers else f"レイヤー番号が範囲外: {key}"
-    *mods, base = key.split("+")
-    for mod in mods:
-        if mod not in MODIFIERS:
-            return f"修飾キーではない: {mod!r} ({key})"
-    if len(set(mods + [base])) != len(mods) + 1:
-        return f"修飾キーが重複している: {key}"
-    return None if base in KEYS else f"未知のキー名: {base!r} ({key})"
+        return check_layer(m.group(2), n_layers, key)
+    m = LT.fullmatch(key)
+    if m:
+        if is_encoder:
+            return f"エンコーダにはレイヤー切り替えを割り当てられない: {key}"
+        return check_layer(m.group(1), n_layers, key) or check_plain(m.group(2), key)
+    m = WM.fullmatch(key)
+    if m:
+        mods = [x.strip() for x in m.group(2).split("|")]
+        for mod in mods:
+            if mod not in MODIFIERS:
+                return f"修飾キーではない: {mod!r} ({key})"
+        if len(set(mods)) != len(mods):
+            return f"修飾キーが重複している: {key}"
+        return check_plain(m.group(1), key)
+    m = SHIFTED.fullmatch(key)
+    if m:
+        return check_plain(m.group(1), key)
+    return check_plain(key, key)
 
 
 def validate(data):
@@ -51,16 +69,11 @@ def validate(data):
     errors = []
     if data.get("keyboard") != "dotmatrix40w":
         errors.append("keyboard は dotmatrix40w のみ対応")
-    def is_int(v, n):
-        return type(v) is int and v == n
-
-    if not is_int(data.get("version"), 1):
-        errors.append("version は 1 のみ対応")
-    if not is_int(data.get("rows"), ROWS) or not is_int(data.get("cols"), COLS):
-        errors.append(f"rows / cols は {ROWS} / {COLS} でなければならない")
+    if type(data.get("version")) is not int or data.get("version") != 2:
+        errors.append("version は 2 のみ対応")
     layers = data.get("layers")
-    if not isinstance(layers, list) or not layers:
-        return errors + ["layers が空、または配列ではない"]
+    if not isinstance(layers, list) or len(layers) != N_LAYERS:
+        return errors + [f"layers は {N_LAYERS} 個の配列でなければならない"]
     seen_names = set()
     for i, layer in enumerate(layers):
         if not isinstance(layer, dict):
@@ -69,21 +82,21 @@ def validate(data):
         name = layer.get("name")
         where = f"layers[{i}]({name})"
         if not isinstance(name, str) or not LAYER_NAME.fullmatch(name):
-            errors.append(f"{where}: name は英小文字とハイフンのみ")
+            errors.append(f"{where}: name は英小文字、数字、ハイフンのみ")
         elif name in seen_names:
             errors.append(f"{where}: name が重複している")
         seen_names.add(name)
         keys = layer.get("keys")
         if (
             not isinstance(keys, list)
-            or len(keys) != ROWS
-            or any(not isinstance(r, list) or len(r) != COLS for r in keys)
+            or len(keys) != len(ROW_LENGTHS)
+            or any(not isinstance(r, list) or len(r) != n for r, n in zip(keys, ROW_LENGTHS))
         ):
-            errors.append(f"{where}: keys が {ROWS}行×{COLS}列の配列ではない")
+            errors.append(f"{where}: keys の各行のキー数が {ROW_LENGTHS} ではない")
         else:
             for r, row in enumerate(keys):
                 for c, key in enumerate(row):
-                    err = check_key(key, len(layers), i == 0)
+                    err = check_key(key, N_LAYERS, i == 0)
                     if err:
                         errors.append(f"{where} [{r}][{c}]: {err}")
         encoder = layer.get("encoder")
@@ -92,7 +105,7 @@ def validate(data):
             continue
         for d in ("cw", "ccw"):
             key = encoder.get(d)
-            err = "未設定" if key is None else check_key(key, len(layers), i == 0, is_encoder=True)
+            err = "未設定" if key is None else check_key(key, N_LAYERS, i == 0, is_encoder=True)
             if err:
                 errors.append(f"{where} encoder.{d}: {err}")
     return errors
