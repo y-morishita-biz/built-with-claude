@@ -28,6 +28,6 @@
 
 - 対象キーボードは dotmatrix40W(ワイヤレス 40%、4 行 × 12 列 + ロータリーエンコーダ)
 - 日本語の依頼からキーマップを作り、変更点を説明するところまでを確実に動かす
-- 書き込みは、既存の仕組み(ZMK / RMK + Vial)を使って案内する
+- 書き込みは、dotmatrix40W が使っている RMK + Vial で案内する。詳細は [decisions/001-firmware.md](decisions/001-firmware.md)
 
 具体的な課題の分割は、開催期間中に Claude が毎朝の提案(GitHub Issue)として出します。
