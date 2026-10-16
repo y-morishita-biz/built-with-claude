@@ -13,5 +13,7 @@ while IFS= read -r md; do
     test -e "$dir/$link" || { echo "broken link in $md: $link"; status=1; }
   done < <(grep -oE '\]\([^)#:]+\)' "$md" | sed -E 's/^\]\((.*)\)$/\1/' || true)
 done < <(git ls-files '*.md')
+# キーマップのサンプルが形式どおりか確認する
+python3 scripts/validate_keymap.py examples/*.json || status=1
 [ "$status" -eq 0 ] && echo "check: ok"
 exit $status
