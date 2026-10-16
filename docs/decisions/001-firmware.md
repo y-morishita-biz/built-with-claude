@@ -5,7 +5,7 @@
 
 ## 決めたいこと
 
-Claude が作ったキーマップ([keymap-format.md](../keymap-format.md))を dotmatrix40W に書き込む方法を、ZMK と RMK + Vial のどちらにするか。
+Claude が作ったキーマップ(docs/keymap-format.md、#4)を dotmatrix40W に書き込む方法を、ZMK と RMK + Vial のどちらにするか。
 
 ## 前提
 
@@ -29,7 +29,7 @@ Claude が作ったキーマップ([keymap-format.md](../keymap-format.md))を d
 **ハッカソンでは ZMK を使い、「キーマップ JSON → `.keymap` に変換 → GitHub Actions でビルド → UF2 をドラッグ」の一本道にする。**
 
 - 公式のビルドテンプレートがあり、利用者は GitHub のボタンと UF2 のドラッグだけで済む
-- 生成物がファイルなので、Claude の変更を差分で説明しやすく、評価例([eval-cases.md](../eval-cases.md))で確かめやすい
+- 生成物がファイルなので、Claude の変更を差分で説明しやすく、評価例(docs/eval-cases.md、#5)で確かめやすい
 - ZMK Studio や Vial による「書き込まずに変更」は、エンコーダや BLE の制約があるため期間後の拡張にする
 
 ## 未確定(作者の確認が必要)
