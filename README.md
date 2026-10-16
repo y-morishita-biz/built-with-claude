@@ -46,6 +46,8 @@ Development runs on a loop where Claude Code proposes, implements and self-revie
 | パス | 内容 |
 |---|---|
 | [docs/project.md](docs/project.md) | 作るものの構想(課題、使う人、最初の範囲) |
+| [docs/keymap-format.md](docs/keymap-format.md) | Claude が読み書きするキーマップの形式 |
+| [examples/](examples/) | キーマップのサンプル |
 | [docs/loop.md](docs/loop.md) | 開発ループの詳細 |
 | [docs/ideas.md](docs/ideas.md) | 提案の前提とアイデアメモ |
 | [CLAUDE.md](CLAUDE.md) | Claude Code 向けの作業ルール |
