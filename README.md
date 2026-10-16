@@ -49,6 +49,7 @@ Development runs on a loop where Claude Code proposes, implements and self-revie
 | [docs/keymap-format.md](docs/keymap-format.md) | Claude が読み書きするキーマップの形式 |
 | [examples/](examples/) | キーマップのサンプル |
 | [docs/eval-cases.md](docs/eval-cases.md) | 日本語の依頼とキーマップ変更の評価例 |
+| [docs/decisions/](docs/decisions/) | 設計の判断記録 |
 | [docs/loop.md](docs/loop.md) | 開発ループの詳細 |
 | [docs/ideas.md](docs/ideas.md) | 提案の前提とアイデアメモ |
 | [CLAUDE.md](CLAUDE.md) | Claude Code 向けの作業ルール |
