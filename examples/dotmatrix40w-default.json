@@ -1,0 +1,203 @@
+{
+  "keyboard": "dotmatrix40w",
+  "version": 1,
+  "rows": 4,
+  "cols": 12,
+  "layers": [
+    {
+      "name": "base",
+      "keys": [
+        [
+          "TAB",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "T",
+          "Y",
+          "U",
+          "I",
+          "O",
+          "P",
+          "BSPC"
+        ],
+        [
+          "LCTRL",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "SEMI",
+          "ENTER"
+        ],
+        [
+          "LSHIFT",
+          "Z",
+          "X",
+          "C",
+          "V",
+          "B",
+          "N",
+          "M",
+          "COMMA",
+          "DOT",
+          "SLASH",
+          "RSHIFT"
+        ],
+        [
+          "ESC",
+          "LGUI",
+          "LALT",
+          "LANG2",
+          "MO(1)",
+          "SPACE",
+          "SPACE",
+          "MO(2)",
+          "LANG1",
+          "RALT",
+          "RGUI",
+          "DEL"
+        ]
+      ],
+      "encoder": {
+        "cw": "VOLU",
+        "ccw": "VOLD"
+      }
+    },
+    {
+      "name": "lower",
+      "keys": [
+        [
+          "GRAVE",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "MINUS",
+          "EQUAL",
+          "LBKT",
+          "RBKT",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "F7",
+          "F8",
+          "F9",
+          "F10",
+          "F11",
+          "F12",
+          "QUOTE",
+          "BSLH",
+          "TRANS",
+          "TRANS",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS"
+        ]
+      ],
+      "encoder": {
+        "cw": "RIGHT",
+        "ccw": "LEFT"
+      }
+    },
+    {
+      "name": "raise",
+      "keys": [
+        [
+          "TRANS",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "HOME",
+          "PGDN",
+          "PGUP",
+          "END",
+          "NONE",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "LEFT",
+          "DOWN",
+          "UP",
+          "RIGHT",
+          "NONE",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "LCTRL+Z",
+          "LCTRL+X",
+          "LCTRL+C",
+          "LCTRL+V",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "NONE",
+          "TRANS"
+        ],
+        [
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS",
+          "TRANS"
+        ]
+      ],
+      "encoder": {
+        "cw": "PGDN",
+        "ccw": "PGUP"
+      }
+    }
+  ]
+}
