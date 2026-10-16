@@ -9,3 +9,9 @@
 - 1件の提案は「半日以内で終わる大きさ」に分割する。
 - 課題はハッカソンの趣旨(docs/ideas.md の「提案の前提」)と、作るものの構想(docs/project.md)に沿ったものだけを出す。
 - このリポジトリは Public。秘密情報、APIキー、個人情報は絶対にコミットしない。
+
+## 参照するリポジトリ
+
+- [y-morishita-biz/dotmatrix40W-RMK-Firmware](https://github.com/y-morishita-biz/dotmatrix40W-RMK-Firmware): dotmatrix40W で実際に動いている RMK + Vial ファームウェア。キー配置(`keyboard.toml`)、レイヤー構成、Vial の検証結果(`docs/verification.md`)の正はここ
+- [dotting-dots/dotmatrix40W-technical-documents](https://github.com/dotting-dots/dotmatrix40W-technical-documents): 回路図、基板図、BOM、筐体データ。物理的なキー位置やエンコーダの位置の正はここ
+- このリポジトリの文書と食い違ったら、上の2つを正として直す提案を出す

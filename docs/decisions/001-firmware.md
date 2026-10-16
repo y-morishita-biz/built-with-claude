@@ -36,11 +36,22 @@ Claude が作ったキーマップ([keymap-format.md](../keymap-format.md))を d
 - 生成物がファイルなので、Claude の変更を差分で説明しやすく、評価例([eval-cases.md](../eval-cases.md))で確かめやすい点は変わらない
 - ZMK に移すとファームウェアの入れ替えが必要になり、ハッカソンの範囲を超える
 
+## ファームウェアのリポジトリで確認できたこと(2026-10-16)
+
+[dotmatrix40W-RMK-Firmware](https://github.com/y-morishita-biz/dotmatrix40W-RMK-Firmware) の README と `docs/verification.md` によると、次は実機で確認済み。
+
+- USB 接続で `.vil` レイアウトファイルの import が完走する(キーマップ、マクロ、コンボ、タップダンス)
+- USB 接続でエンコーダの CW / CCW を Vial から変更できる
+- Web 版 Vial で BLE 接続したままキーマップを編集できる
+- 変更は再起動後も保持される
+
+このため、主の経路(`.vil` を書き出して Vial で読み込む)は実現できる見込みが高い。
+
 ## 未確定(開催期間中に検証する)
 
-- `.vil` ファイルの形式と、エンコーダの割り当てを `.vil` で扱えるか
-- Vial での変更を USB と BLE のどちらで行うか(RMK は BLE 越しのキーマップ変更に対応している)
-- `keyboard.toml` のキーマップ記法と、ビルドの手順(RMK はプロジェクト雛形 `rmk-template` を用意している)
+- `.vil` を Claude が生成したときに、そのまま import できるか(形式の細部)
+- BLE 接続のまま `.vil` を import できるか(USB では確認済み)
+- `keyboard.toml` から初期キーマップを変えてビルドする手順(リポジトリに `Makefile.toml` と手順あり)
 
 ## 参考
 
