@@ -10,7 +10,13 @@ import tomllib
 
 
 def expand_aliases(token, aliases):
-    return re.sub(r"@([a-z_]+)", lambda m: aliases[m.group(1)], token)
+    def repl(m):
+        name = m.group(1)
+        if name not in aliases:
+            sys.exit(f"未定義の別名: @{name}")
+        return aliases[name]
+
+    return re.sub(r"@([A-Za-z0-9_]+)", repl, token)
 
 
 def split_keys(line):
@@ -42,7 +48,8 @@ def main(path):
             [expand_aliases(k, aliases) for k in split_keys(line)]
             for line in layer["keys"].strip().splitlines()
         ]
-        cw, ccw = layer["encoders"][0]
+        # エンコーダの設定がないレイヤーは何もしない扱いにする
+        cw, ccw = (layer.get("encoders") or [["No", "No"]])[0]
         layers.append({"name": layer["name"], "keys": rows, "encoder": {"cw": cw, "ccw": ccw}})
     out = {"keyboard": "dotmatrix40w", "version": 2, "layers": layers}
     json.dump(out, sys.stdout, ensure_ascii=False, indent=2)
