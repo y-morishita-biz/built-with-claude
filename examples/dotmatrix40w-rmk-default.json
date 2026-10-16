@@ -1,0 +1,326 @@
+{
+  "keyboard": "dotmatrix40w",
+  "version": 2,
+  "layers": [
+    {
+      "name": "base",
+      "keys": [
+        [
+          "Escape",
+          "Kc1",
+          "Kc2",
+          "Kc3",
+          "Kc4",
+          "Kc5",
+          "Kc6",
+          "Kc7",
+          "Kc8",
+          "Kc9",
+          "Kc0",
+          "Backspace"
+        ],
+        [
+          "LCtrl",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "LeftBracket",
+          "RightBracket"
+        ],
+        [
+          "LShift",
+          "Z",
+          "X",
+          "C",
+          "V",
+          "B",
+          "N",
+          "M",
+          "Comma",
+          "Dot",
+          "Slash",
+          "International1"
+        ],
+        [
+          "MO(1)",
+          "LAlt",
+          "LGui",
+          "Language2",
+          "Space",
+          "MediaPlayPause",
+          "Enter",
+          "Language1",
+          "Minus",
+          "Grave",
+          "LT(2, Right)"
+        ]
+      ],
+      "encoder": {
+        "cw": "AudioVolUp",
+        "ccw": "AudioVolDown"
+      }
+    },
+    {
+      "name": "fn",
+      "keys": [
+        [
+          "Escape",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10",
+          "Delete"
+        ],
+        [
+          "_",
+          "F11",
+          "F12",
+          "SHIFTED(Kc1)",
+          "SHIFTED(Kc2)",
+          "SHIFTED(Kc3)",
+          "SHIFTED(Kc4)",
+          "SHIFTED(Kc5)",
+          "SHIFTED(Kc6)",
+          "SHIFTED(Kc7)",
+          "SHIFTED(Kc8)",
+          "Backspace"
+        ],
+        [
+          "_",
+          "Kp7",
+          "Kp8",
+          "Kp9",
+          "KpPlus",
+          "SHIFTED(Kc9)",
+          "SHIFTED(Kc0)",
+          "SHIFTED(Minus)",
+          "SHIFTED(Equal)",
+          "Home",
+          "End",
+          "PageUp"
+        ],
+        [
+          "TG(1)",
+          "Kp4",
+          "Kp5",
+          "Kp6",
+          "Kp0",
+          "KpDot",
+          "Enter",
+          "Left",
+          "Down",
+          "Up",
+          "MO(2)"
+        ]
+      ],
+      "encoder": {
+        "cw": "PageDown",
+        "ccw": "PageUp"
+      }
+    },
+    {
+      "name": "media",
+      "keys": [
+        [
+          "Escape",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "Delete"
+        ],
+        [
+          "_",
+          "WM(Z, LCtrl)",
+          "WM(X, LCtrl)",
+          "WM(C, LCtrl)",
+          "WM(V, LCtrl)",
+          "WM(Z, LCtrl | LShift)",
+          "MouseLeft",
+          "MouseDown",
+          "MouseUp",
+          "MouseRight",
+          "Home",
+          "End"
+        ],
+        [
+          "_",
+          "MediaPrevTrack",
+          "AudioVolDown",
+          "AudioVolUp",
+          "MediaNextTrack",
+          "AudioMute",
+          "WM(Left, LCtrl)",
+          "WM(Down, LCtrl)",
+          "WM(Up, LCtrl)",
+          "WM(Right, LCtrl)",
+          "PageDown",
+          "PageUp"
+        ],
+        [
+          "TG(2)",
+          "LAlt",
+          "LGui",
+          "Language2",
+          "Space",
+          "MediaPlayPause",
+          "Enter",
+          "Language1",
+          "BacklightDown",
+          "BacklightUp",
+          "TG(1)"
+        ]
+      ],
+      "encoder": {
+        "cw": "BacklightUp",
+        "ccw": "BacklightDown"
+      }
+    },
+    {
+      "name": "user1",
+      "keys": [
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ]
+      ],
+      "encoder": {
+        "cw": "_",
+        "ccw": "_"
+      }
+    },
+    {
+      "name": "user2",
+      "keys": [
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ]
+      ],
+      "encoder": {
+        "cw": "_",
+        "ccw": "_"
+      }
+    }
+  ]
+}
