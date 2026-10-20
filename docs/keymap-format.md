@@ -2,7 +2,10 @@
 
 Claude が dotmatrix40W のキーマップを読み、変更し、書き出すための共通の形式です。キーの書き方は実機のファームウェア [dotmatrix40W-RMK-Firmware](https://github.com/y-morishita-biz/dotmatrix40W-RMK-Firmware) の `keyboard.toml`(RMK)にそろえてあり、そのまま `keyboard.toml` や Vial の `.vil` に変換できるようにしています。
 
-サンプル: [examples/dotmatrix40w-rmk-default.json](../examples/dotmatrix40w-rmk-default.json)(実機の `keyboard.toml` から `scripts/from_keyboard_toml.py` で作ったもの)
+サンプル:
+
+- [examples/dotmatrix40w-rmk-default.json](../examples/dotmatrix40w-rmk-default.json): 実機の `keyboard.toml` から `scripts/from_keyboard_toml.py` で作ったもの(ファームの初期配列)
+- [examples/dotmatrix40w-mac.json](../examples/dotmatrix40w-mac.json): メンテナーが普段使っている Vial の配列 [examples/dotmatrix40w-mac.vil](../examples/dotmatrix40w-mac.vil) から `scripts/from_vil.py` で作ったもの(QWERTY、Mac 向け)
 
 ## 全体
 
@@ -66,6 +69,7 @@ RMK の `keyboard.toml` と同じ書き方です。
 ```sh
 python3 scripts/validate_keymap.py examples/*.json
 python3 scripts/from_keyboard_toml.py path/to/keyboard.toml > out.json
+python3 scripts/from_vil.py path/to/layout.vil > out.json
 ```
 
 検証では、レイヤー数、各行のキー数、キー名、修飾キーの重複、レイヤー番号の範囲、レイヤー名を確認します。`scripts/check.sh` からも呼ばれます。

@@ -1,6 +1,6 @@
 # Vial のレイアウトファイル(.vil)
 
-キーマップ JSON(version 2)を Vial で読み込める `.vil` に変換するための調べものです。変換スクリプトは開催期間中に作ります。ここに書いた内容は、次のソースを読んで確かめました(2026-10-17)。
+キーマップ JSON(version 2)と Vial の `.vil` を行き来するための調べものです。`.vil` からキーマップ JSON への読み込みは `scripts/from_vil.py` でできます。逆向き(`.vil` の書き出し)は開催期間中に作ります。ここに書いた内容は、次のソースを読んで確かめました(2026-10-17)。
 
 - Vial の GUI: [vial-kb/vial-gui](https://github.com/vial-kb/vial-gui) の `protocol/keyboard_comm.py`(`save_layout` / `restore_layout`)と `keycodes/`(コミット `aef8222`)。Web 版 Vial も同じ Python コードから作られています
 - 実機ファーム: [dotmatrix40W-RMK-Firmware](https://github.com/y-morishita-biz/dotmatrix40W-RMK-Firmware) の `vial.json`、`build.rs`、`vendor/rmk-0.8.2/src/host/via/keycode_convert.rs` と `vial.rs`
@@ -30,6 +30,7 @@
 - `encoder_layout` は位置を確かめずに書き込まれます。数が合わないと読み込みが途中で止まる(キーマップだけ書き込まれ、残りが反映されない)ので、必ず 5 × 1 × 2 にします
 - キーは文字列(`"KC_A"`)でも 16 ビットの整数でも読み込めます。Vial が保存するのは文字列です
 - Vial が知らない文字列は、エラーにならず `KC_NO`(何もしないキー)として読み込まれます。変換では下の表にある文字列だけを使い、表に無いキーは変換を止めます
+- **名前のないキーは 16 進の文字列になります。** Vial は名前の無い値を `"0xb21"`(小文字、先頭の 0 なし)のような文字列で保存します。たとえば Ctrl + Shift + Command + 4 は修飾の組み合わせに名前が無いので `"0xb21"` です。読み込むときも、この文字列は 16 ビット値として扱われます
 
 ## 気をつける点
 
@@ -41,7 +42,7 @@
 
 ## RMK のキー名との対応
 
-サンプル [examples/dotmatrix40w-rmk-default.json](../examples/dotmatrix40w-rmk-default.json) に出てくる全キーと、`User0`〜`User8` の対応です。サンプルのキーがこの表から漏れていないかは `scripts/check.sh` が確かめます。16 ビット値は RMK の `to_via_keycode` の規則で計算し、文字列は Vial(通信の版 6)が同じ値を表示するときの名前です。
+サンプル [examples/dotmatrix40w-rmk-default.json](../examples/dotmatrix40w-rmk-default.json) と [examples/dotmatrix40w-mac.json](../examples/dotmatrix40w-mac.json) に出てくる全キーと、`User0`〜`User8` の対応です。サンプルのキーがこの表から漏れていないかは `scripts/check.sh` が確かめます。16 ビット値は RMK の `to_via_keycode` の規則で計算し、文字列は Vial(通信の版 6)が同じ値を表示するときの名前です。
 
 規則をまとめると次のとおりです。
 
@@ -59,18 +60,21 @@
 |---|---|---|
 | `A` | `KC_A` | `0x0004` |
 | `B` | `KC_B` | `0x0005` |
+| `Backslash` | `KC_BSLASH` | `0x0031` |
 | `Backspace` | `KC_BSPACE` | `0x002A` |
 | `C` | `KC_C` | `0x0006` |
 | `Comma` | `KC_COMMA` | `0x0036` |
 | `D` | `KC_D` | `0x0007` |
 | `Delete` | `KC_DELETE` | `0x004C` |
 | `Dot` | `KC_DOT` | `0x0037` |
+| `E` | `KC_E` | `0x0008` |
 | `Enter` | `KC_ENTER` | `0x0028` |
 | `Escape` | `KC_ESCAPE` | `0x0029` |
 | `F` | `KC_F` | `0x0009` |
 | `G` | `KC_G` | `0x000A` |
 | `Grave` | `KC_GRAVE` | `0x0035` |
 | `H` | `KC_H` | `0x000B` |
+| `I` | `KC_I` | `0x000C` |
 | `J` | `KC_J` | `0x000D` |
 | `K` | `KC_K` | `0x000E` |
 | `Kc0` | `KC_0` | `0x0027` |
@@ -88,12 +92,23 @@
 | `M` | `KC_M` | `0x0010` |
 | `Minus` | `KC_MINUS` | `0x002D` |
 | `N` | `KC_N` | `0x0011` |
+| `O` | `KC_O` | `0x0012` |
+| `P` | `KC_P` | `0x0013` |
+| `Q` | `KC_Q` | `0x0014` |
+| `Quote` | `KC_QUOTE` | `0x0034` |
+| `R` | `KC_R` | `0x0015` |
 | `RightBracket` | `KC_RBRACKET` | `0x0030` |
 | `S` | `KC_S` | `0x0016` |
+| `Semicolon` | `KC_SCOLON` | `0x0033` |
 | `Slash` | `KC_SLASH` | `0x0038` |
 | `Space` | `KC_SPACE` | `0x002C` |
+| `T` | `KC_T` | `0x0017` |
+| `Tab` | `KC_TAB` | `0x002B` |
+| `U` | `KC_U` | `0x0018` |
 | `V` | `KC_V` | `0x0019` |
+| `W` | `KC_W` | `0x001A` |
 | `X` | `KC_X` | `0x001B` |
+| `Y` | `KC_Y` | `0x001C` |
 | `Z` | `KC_Z` | `0x001D` |
 
 ### ファンクション
@@ -123,6 +138,7 @@
 | `Left` | `KC_LEFT` | `0x0050` |
 | `PageDown` | `KC_PGDOWN` | `0x004E` |
 | `PageUp` | `KC_PGUP` | `0x004B` |
+| `Right` | `KC_RIGHT` | `0x004F` |
 | `Up` | `KC_UP` | `0x0052` |
 
 ### 修飾キー
@@ -153,8 +169,12 @@
 | `Kp7` | `KC_KP_7` | `0x005F` |
 | `Kp8` | `KC_KP_8` | `0x0060` |
 | `Kp9` | `KC_KP_9` | `0x0061` |
+| `KpAsterisk` | `KC_KP_ASTERISK` | `0x0055` |
 | `KpDot` | `KC_KP_DOT` | `0x0063` |
+| `KpEqual` | `KC_KP_EQUAL` | `0x0067` |
+| `KpMinus` | `KC_KP_MINUS` | `0x0056` |
 | `KpPlus` | `KC_KP_PLUS` | `0x0057` |
+| `KpSlash` | `KC_KP_SLASH` | `0x0054` |
 
 ### メディア・音量
 
@@ -163,9 +183,11 @@
 | `AudioMute` | `KC_MUTE` | `0x00A8` |
 | `AudioVolDown` | `KC_VOLD` | `0x00AA` |
 | `AudioVolUp` | `KC_VOLU` | `0x00A9` |
+| `MediaFastForward` | `KC_MFFD` | `0x00BB` |
 | `MediaNextTrack` | `KC_MNXT` | `0x00AB` |
 | `MediaPlayPause` | `KC_MPLY` | `0x00AE` |
 | `MediaPrevTrack` | `KC_MPRV` | `0x00AC` |
+| `MediaRewind` | `KC_MRWD` | `0x00BC` |
 
 ### マウス
 
@@ -175,6 +197,10 @@
 | `MouseLeft` | `KC_MS_L` | `0x00CF` |
 | `MouseRight` | `KC_MS_R` | `0x00D0` |
 | `MouseUp` | `KC_MS_U` | `0x00CD` |
+| `MouseWheelDown` | `KC_WH_D` | `0x00DA` |
+| `MouseWheelLeft` | `KC_WH_L` | `0x00DB` |
+| `MouseWheelRight` | `KC_WH_R` | `0x00DC` |
+| `MouseWheelUp` | `KC_WH_U` | `0x00D9` |
 
 ### バックライト
 
@@ -211,8 +237,13 @@
 | `SHIFTED(Minus)` | `LSFT(KC_MINUS)` | `0x022D` |
 | `WM(C, LCtrl)` | `LCTL(KC_C)` | `0x0106` |
 | `WM(Down, LCtrl)` | `LCTL(KC_DOWN)` | `0x0151` |
+| `WM(Kc4, LCtrl \| LShift \| LGui)` | `0xb21` | `0x0B21` |
+| `WM(Kc4, LShift \| LGui)` | `SGUI(KC_4)` | `0x0A21` |
 | `WM(Left, LCtrl)` | `LCTL(KC_LEFT)` | `0x0150` |
+| `WM(Q, LCtrl \| LGui)` | `LCG(KC_Q)` | `0x0914` |
 | `WM(Right, LCtrl)` | `LCTL(KC_RIGHT)` | `0x014F` |
+| `WM(Space, LCtrl \| LGui)` | `LCG(KC_SPACE)` | `0x092C` |
+| `WM(Space, LCtrl)` | `LCTL(KC_SPACE)` | `0x012C` |
 | `WM(Up, LCtrl)` | `LCTL(KC_UP)` | `0x0152` |
 | `WM(V, LCtrl)` | `LCTL(KC_V)` | `0x0119` |
 | `WM(X, LCtrl)` | `LCTL(KC_X)` | `0x011B` |
@@ -239,6 +270,19 @@
 |---|---|---|
 | `No` | `KC_NO` | `0x0000` |
 | `_` | `KC_TRNS` | `0x0001` |
+
+## .vil からの読み込み
+
+```sh
+python3 scripts/from_vil.py examples/dotmatrix40w-mac.vil > out.json
+```
+
+- キーは上の表で引きます。表に無いものは、16 ビット値にしてから上の規則で組み立てます。値にできるのは、16 進の文字列と整数、Vial の修飾の名前(`LCTL(KC_A)`、`MEH(KC_A)` など)、`MO(n)` などのレイヤー操作、`LTn(KC_x)` です。修飾や `LT` と組み合わせられるのは基本のキー(`0x04`〜`0xA4` と修飾キー)だけです
+- 読めないキーがあるか、結果が `scripts/validate_keymap.py` の検証を通らない(ベースレイヤーに `KC_TRNS` があるなど)ときは止まります
+- 4 行目は列 6 を飛ばし、`encoder_layout` の `[反時計回り, 時計回り]` を `ccw` / `cw` に入れます
+- レイヤー名は base / fn / media / user1 / user2 にします
+- `combo`、`tap_dance`、`macro`、`settings` などはキーマップ JSON に入らないので読みません。何か設定されていれば標準エラーに知らせます。`uid` が dotmatrix40W のものでないときも知らせます
+- サンプルの `.vil` と JSON が全キー一致することは `scripts/test_from_vil.py`(`scripts/check.sh` から呼ばれる)で確かめます
 
 ## 実機で確かめること(開催期間中)
 
