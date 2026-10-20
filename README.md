@@ -48,7 +48,7 @@ Development runs on a loop where Claude Code proposes, implements and self-revie
 | [docs/project.md](docs/project.md) | 作るものの構想(課題、使う人、最初の範囲) |
 | [docs/keymap-format.md](docs/keymap-format.md) | Claude が読み書きするキーマップの形式 |
 | [docs/vil-format.md](docs/vil-format.md) | Vial のレイアウトファイル(.vil)の形式と、キー名の対応表 |
-| [examples/](examples/) | キーマップのサンプル(実機の keyboard.toml から生成) |
+| [examples/](examples/) | キーマップのサンプル(実機の keyboard.toml から生成したものと、普段使いの Vial 配列から読み込んだもの) |
 | [data/](data/) | RMK のキー名一覧など、検証に使うデータ |
 | [docs/eval-cases.md](docs/eval-cases.md) | 日本語の依頼とキーマップ変更の評価例 |
 | [docs/decisions/](docs/decisions/) | 設計の判断記録 |

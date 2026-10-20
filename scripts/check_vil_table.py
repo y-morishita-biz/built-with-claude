@@ -4,11 +4,11 @@
 使い方: python3 scripts/check_vil_table.py <キーマップ JSON> ...
 """
 import json
-import re
 import sys
 
+from from_vil import ROW
+
 TABLE = "docs/vil-format.md"
-ROW = re.compile(r"^\| `(.+?)` \| `(.+?)` \| `0x[0-9A-F]{4}` \|$", re.MULTILINE)
 
 
 def table_keys(path):

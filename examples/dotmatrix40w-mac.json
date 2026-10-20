@@ -1,0 +1,326 @@
+{
+  "keyboard": "dotmatrix40w",
+  "version": 2,
+  "layers": [
+    {
+      "name": "base",
+      "keys": [
+        [
+          "Minus",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "T",
+          "Y",
+          "U",
+          "I",
+          "O",
+          "P",
+          "Backspace"
+        ],
+        [
+          "Tab",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "Semicolon",
+          "Quote"
+        ],
+        [
+          "LShift",
+          "Z",
+          "X",
+          "C",
+          "V",
+          "B",
+          "N",
+          "M",
+          "Comma",
+          "Dot",
+          "Up",
+          "Slash"
+        ],
+        [
+          "MO(1)",
+          "LAlt",
+          "LGui",
+          "Language2",
+          "Space",
+          "No",
+          "Enter",
+          "Language1",
+          "Left",
+          "Down",
+          "Right"
+        ]
+      ],
+      "encoder": {
+        "cw": "MouseWheelDown",
+        "ccw": "MouseWheelUp"
+      }
+    },
+    {
+      "name": "fn",
+      "keys": [
+        [
+          "Escape",
+          "F10",
+          "F11",
+          "F12",
+          "Semicolon",
+          "WM(Space, LCtrl)",
+          "WM(Q, LCtrl | LGui)",
+          "Quote",
+          "KpPlus",
+          "Kc7",
+          "Kc8",
+          "Kc9"
+        ],
+        [
+          "_",
+          "F7",
+          "F8",
+          "F9",
+          "RightBracket",
+          "WM(Kc4, LShift | LGui)",
+          "No",
+          "Backslash",
+          "KpMinus",
+          "Kc4",
+          "Kc5",
+          "Kc6"
+        ],
+        [
+          "_",
+          "F4",
+          "F5",
+          "F6",
+          "LeftBracket",
+          "WM(Kc4, LCtrl | LShift | LGui)",
+          "No",
+          "International1",
+          "KpAsterisk",
+          "Kc1",
+          "Kc2",
+          "Kc3"
+        ],
+        [
+          "_",
+          "F1",
+          "F2",
+          "F3",
+          "MO(2)",
+          "No",
+          "Delete",
+          "KpSlash",
+          "Kc0",
+          "KpDot",
+          "KpEqual"
+        ]
+      ],
+      "encoder": {
+        "cw": "MouseWheelRight",
+        "ccw": "MouseWheelLeft"
+      }
+    },
+    {
+      "name": "media",
+      "keys": [
+        [
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "KpPlus",
+          "No",
+          "No",
+          "No"
+        ],
+        [
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "KpMinus",
+          "No",
+          "No",
+          "No"
+        ],
+        [
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "No",
+          "MediaRewind",
+          "AudioVolUp",
+          "MediaFastForward"
+        ],
+        [
+          "No",
+          "No",
+          "LGui",
+          "No",
+          "No",
+          "No",
+          "WM(Space, LCtrl | LGui)",
+          "No",
+          "WM(Left, LCtrl)",
+          "AudioVolDown",
+          "WM(Right, LCtrl)"
+        ]
+      ],
+      "encoder": {
+        "cw": "BacklightUp",
+        "ccw": "BacklightDown"
+      }
+    },
+    {
+      "name": "user1",
+      "keys": [
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ]
+      ],
+      "encoder": {
+        "cw": "_",
+        "ccw": "_"
+      }
+    },
+    {
+      "name": "user2",
+      "keys": [
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ],
+        [
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_",
+          "_"
+        ]
+      ],
+      "encoder": {
+        "cw": "_",
+        "ccw": "_"
+      }
+    }
+  ]
+}
