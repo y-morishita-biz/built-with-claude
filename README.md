@@ -19,15 +19,15 @@
 - 2026-10: 題材を決め、開発ループの仕組みを用意しました(このリポジトリ)
 - 2026-11-02 〜 11-10: ハッカソン期間中に本体を実装します
 
-## 作り方: 人間の判断を2点に絞った開発ループ
+## 作り方: Claude Code が自走する開発ループ
 
-開発そのものは Claude Code に任せ、人間が判断するのは「何を作るかの採用」と「マージ」の2点だけです。仕事をしながらでも、一週間で動くものを作り切るための仕組みです。
+開発そのものは Claude Code に任せています。始めは人が「何を作るかの採用」と「マージ」の2点を決めていましたが、2026-10-27 からは Claude が採用からマージまで進め、作者は結果を受け取るだけです。人が関わるのは、取り返しのつかない操作の確認と、実機での確認だけです。仕事をしながらでも、一週間で動くものを作り切るための仕組みです。
 
 1. **提案**: 毎朝、Claude が半日以内で終わる大きさの課題を最大3件提案し、GitHub Issue(ラベル `proposal`)にします
-2. **採用**: 作者がスマホで「採用 / 却下」を選びます。採用された Issue には `approved` ラベルが付きます
+2. **採用**: Claude が課題を採用し、`approved` ラベルを付けます(10-26 までは、作者がスマホで「採用 / 却下」を選んでいました)
 3. **実装**: Claude がブランチを切り、ドラフト PR を作ります
 4. **AI レビュー**: Claude が `/code-review` で自己レビューして直し、CI がグリーンになるまで回します
-5. **マージ**: 作者がマージするかどうかを決めます
+5. **マージ**: CI がグリーンで AI レビュー欄が埋まったら、Claude がマージし、結果を作者に短く報告します
 
 詳細は [docs/loop.md](docs/loop.md) にあります。
 
@@ -39,7 +39,7 @@
 ## English summary
 
 A tool that lets anyone customize their keyboard's keymap just by describing what they want in plain Japanese. Claude proposes a keymap, explains what changed, and guides the user through writing it to the keyboard, starting with the dotmatrix40W wireless keyboard.
-Development runs on a loop where Claude Code proposes, implements and self-reviews every task, and the human only approves tasks and merges.
+Development runs on a loop where Claude Code proposes, implements and self-reviews every task, and, since 2026-10-27, also adopts tasks and merges them once CI is green. The human only confirms irreversible operations and checks the result on the real keyboard.
 
 ## リポジトリの構成
 
