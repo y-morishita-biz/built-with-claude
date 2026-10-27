@@ -16,6 +16,8 @@ while IFS= read -r md; do
 done < <(git ls-files '*.md')
 # キーマップのサンプルが形式どおりか確認する
 python3 scripts/validate_keymap.py examples/*.json || status=1
+# Skill の zip を作り、リポジトリの外で展開してもスクリプトが動くか確認する
+bash scripts/test_build_skill.sh || status=1
 # .vil への対応表に、サンプルのキーが漏れなく載っているか確認する
 python3 scripts/check_vil_table.py examples/*.json || status=1
 # .vil からキーマップ JSON への変換が、サンプルで全キー一致するか確認する
