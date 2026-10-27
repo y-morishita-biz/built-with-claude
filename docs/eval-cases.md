@@ -8,7 +8,7 @@ Claude が作ったキーマップが依頼どおりかを判定するための�
 - 4 行目の 6 番目(`MediaPlayPause`)はエンコーダの下にあり押せません。ここに大事な機能を置いてはいけません
 - 「必須」は満たさなければ不合格、「望ましい」は満たすと加点です
 - 「してはいけない」は、依頼に関係ないキーを壊していないかの確認です
-- キーの位置で判定できる条件(1〜4、6〜8、M3、M6〜M8)は [evals/cases.json](../evals/cases.json) にあり、`python3 scripts/check_eval.py 番号 キーマップ.json` で判定できます。「〜を説明する」の項目と、5、9、10 は Claude の返答を読んで確かめます
+- キーの位置で判定できる条件(1〜4、6〜8、M3、M6〜M8)は [evals/cases.json](../evals/cases.json) にあり、`python3 scripts/check_eval.py 番号 キーマップ.json` で判定できます。評価例ごとのキーマップを「番号.json」で 1 つのフォルダに置けば、`python3 scripts/eval_report.py フォルダ` で全件の一覧(合格、不合格、未実行、返答を読む)が出ます。「〜を説明する」の項目と、5、9、10 は Claude の返答を読んで確かめます
 
 ## 1. 左手だけで Photoshop
 

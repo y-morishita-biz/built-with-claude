@@ -40,13 +40,41 @@ def norm(key):
     return key
 
 
+def normalized(keymap):
+    """全部のキーとエンコーダの書き方をそろえた写しを返す。"""
+    return {
+        **keymap,
+        "layers": [
+            {
+                **layer,
+                "keys": [[norm(k) for k in row] for row in layer["keys"]],
+                "encoder": {d: norm(k) for d, k in layer["encoder"].items()},
+            }
+            for layer in keymap["layers"]
+        ],
+    }
+
+
+def normalized_cond(cond):
+    """条件に書かれたキーの書き方をそろえた写しを返す。"""
+    out = dict(cond)
+    if "keys" in out:
+        out["keys"] = [norm(k) for k in out["keys"]]
+    if "rows" in out and out["type"] in ("block", "no_block"):
+        out["rows"] = [[norm(k) for k in row] for row in out["rows"]]
+    for d in ("cw", "ccw"):
+        if d in out:
+            out[d] = norm(out[d])
+    return out
+
+
 def physical_col(r, c):
     """行と列(1 から)を、マトリクスの列(1 から)にする。4 行目は 6 番目より右が 1 つずれる。"""
     return c + 1 if r == 4 and c > 6 else c
 
 
 def cells(keymap, layer, rows=None, cols=None):
-    """(行, 列, キー) を返す。行と列は 1 から。押せない位置は除く。キーの書き方はそろえる。"""
+    """(行, 列, キー) を返す。行と列は 1 から。押せない位置は除く。"""
     for r, row in enumerate(keymap["layers"][layer]["keys"], 1):
         if rows and r not in rows:
             continue
@@ -55,11 +83,11 @@ def cells(keymap, layer, rows=None, cols=None):
                 continue
             if cols and not cols[0] <= c <= cols[1]:
                 continue
-            yield r, c, norm(key)
+            yield r, c, key
 
 
 def key_at(keymap, layer, r, c):
-    return norm(keymap["layers"][layer]["keys"][r - 1][c - 1])
+    return keymap["layers"][layer]["keys"][r - 1][c - 1]
 
 
 def switch_target(key):
@@ -84,12 +112,12 @@ def reachable(keymap):
 
 def has_keys(keymap, layer, cond):
     found = {k for _, _, k in cells(keymap, layer, cond.get("rows"), cond.get("cols"))}
-    return all(norm(k) in found for k in cond["keys"])
+    return set(cond["keys"]) <= found
 
 
 def block_at(grid, r0, c0, rows):
     return all(
-        grid.get((r0 + dr, c0 + dc)) == norm(key)
+        grid.get((r0 + dr, c0 + dc)) == key
         for dr, want in enumerate(rows)
         for dc, key in enumerate(want)
     )
@@ -104,10 +132,9 @@ def find_block(keymap, rows, layers):
     return None
 
 
-def holds(cond, keymap, start):
-    """条件が成り立てば True。"""
+def holds(cond, keymap, start, reach):
+    """条件が成り立てば True。キーマップと条件は書き方をそろえてから渡す。reach は行けるレイヤー。"""
     t = cond["type"]
-    reach = reachable(keymap)
     candidates = [i for i in cond.get("layers", range(len(keymap["layers"]))) if i in reach]
     if t == "layer_with_keys":
         return any(has_keys(keymap, i, cond) for i in candidates)
@@ -120,7 +147,7 @@ def holds(cond, keymap, start):
         return bool(targets & switches)
     if t == "each_key_somewhere":
         found = {k for i in candidates for _, _, k in cells(keymap, i, cond.get("rows"), cond.get("cols"))}
-        return all(norm(k) in found for k in cond["keys"])
+        return set(cond["keys"]) <= found
     if t == "block":
         return find_block(keymap, cond["rows"], candidates) is not None
     if t == "no_block":
@@ -141,10 +168,10 @@ def holds(cond, keymap, start):
         return all(key_at(keymap, layer, r, c) == key_at(start, layer, r, c) for r, c in where)
     if t == "keys_kept":
         found = {k for _, _, k in cells(keymap, cond["layer"])}
-        return all(norm(k) in found for k in cond["keys"])
+        return set(cond["keys"]) <= found
     if t == "absent":
         found = {k for i in range(len(keymap["layers"])) for _, _, k in cells(keymap, i)}
-        return not any(norm(k) in found for k in cond["keys"])
+        return not set(cond["keys"]) & found
     if t == "no_more_no":
         def count(km):
             return sum(k == "No" for _, _, k in cells(km, cond["layer"], cols=cond["cols"]))
@@ -156,13 +183,28 @@ def check(case_id, keymap, cases=None):
     """満たさなかった条件の説明の一覧を返す。空なら合格。"""
     cases = cases or load(CASES)
     case = cases["cases"][case_id]
-    start = load(ROOT / cases["starts"][case["start"]])
+    start = normalized(load(ROOT / cases["starts"][case["start"]]))
+    keymap = normalized(keymap)
+    reach = reachable(keymap)
     failed = []
     for cond in case["conditions"]:
-        if not holds(cond, keymap, start):
+        if not holds(normalized_cond(cond), keymap, start, reach):
             label = "必須を満たさない" if cond["kind"] == "must" else "してはいけない"
             failed.append(f"{label}: {cond['text']}")
     return failed
+
+
+def evaluate(case_id, path, cases):
+    """ファイルを読んで判定する。(結果, 理由の一覧) を返す。結果は 合格 / 不合格 / 読めない。"""
+    try:
+        keymap = load(path)
+    except (OSError, ValueError) as e:
+        return "読めない", [f"読み込めない: {e}"]
+    errors = validate(keymap)
+    if errors:
+        return "読めない", [f"形式が正しくない: {e}" for e in errors]
+    failed = check(case_id, keymap, cases)
+    return ("不合格" if failed else "合格"), failed
 
 
 def main(argv):
@@ -173,24 +215,18 @@ def main(argv):
     if argv[1] not in cases["cases"]:
         print(f"評価例 {argv[1]} はスクリプトで判定できない(対象: {', '.join(cases['cases'])})", file=sys.stderr)
         return 2
-    try:
-        keymap = load(argv[2])
-    except (OSError, ValueError) as e:
-        print(f"{argv[2]}: 読み込めない: {e}", file=sys.stderr)
+    result, reasons = evaluate(argv[1], argv[2], cases)
+    if result == "読めない":
+        for r in reasons:
+            print(f"{argv[2]}: {r}", file=sys.stderr)
         return 2
-    errors = validate(keymap)
-    if errors:
-        for e in errors:
-            print(f"{argv[2]}: 形式が正しくない: {e}", file=sys.stderr)
-        return 2
-    failed = check(argv[1], keymap, cases)
-    for f in failed:
-        print(f"評価例 {argv[1]}: {f}")
+    for r in reasons:
+        print(f"評価例 {argv[1]}: {r}")
     note = cases["cases"][argv[1]].get("note")
     if note:
         print(f"評価例 {argv[1]}: 注意: {note}")
-    print(f"評価例 {argv[1]}: {'合格' if not failed else '不合格'}(説明の項目は返答を読んで確かめる)")
-    return 1 if failed else 0
+    print(f"評価例 {argv[1]}: {result}(説明の項目は返答を読んで確かめる)")
+    return 1 if reasons else 0
 
 
 if __name__ == "__main__":

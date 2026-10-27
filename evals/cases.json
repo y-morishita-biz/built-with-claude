@@ -1,11 +1,13 @@
 {
-  "about": "docs/eval-cases.md の評価例のうち、キーの位置で判定できる条件。行と列は 1 から数える(4 行目は 11 列)。説明の項目は対象外",
+  "about": "docs/eval-cases.md の評価例のうち、キーの位置で判定できる条件。行と列は 1 から数える(4 行目は 11 列)。説明の項目は対象外。explain は必須の説明の項目があること、by_reply は返答だけで確かめる評価例",
+  "by_reply": ["5", "9", "10"],
   "starts": {
     "default": "examples/dotmatrix40w-rmk-default.json",
     "mac": "examples/dotmatrix40w-mac.json"
   },
   "cases": {
     "1": {
+      "explain": true,
       "start": "default",
       "conditions": [
         {"kind": "must", "type": "layer_with_switch", "layers": [3, 4], "switch_cols": [1, 6],
@@ -71,6 +73,7 @@
       ]
     },
     "M3": {
+      "explain": true,
       "start": "mac",
       "conditions": [
         {"kind": "must", "type": "block", "rows": [["Kp7", "Kp8", "Kp9"], ["Kp4", "Kp5", "Kp6"], ["Kp1", "Kp2", "Kp3"]],
@@ -82,6 +85,7 @@
       ]
     },
     "M6": {
+      "explain": true,
       "start": "mac",
       "conditions": [
         {"kind": "must", "type": "positions", "row": 2, "cols": [7, 8, 9, 10], "keys": ["Left", "Down", "Up", "Right"],
