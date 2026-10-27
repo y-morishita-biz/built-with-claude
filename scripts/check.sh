@@ -24,6 +24,8 @@ python3 scripts/check_vil_table.py examples/*.json || status=1
 python3 scripts/test_from_vil.py || status=1
 # 評価例の判定スクリプトが、出発点は不合格、答えの例は合格と判定するか確認する
 python3 scripts/test_check_eval.py || status=1
+# 評価例の一覧が、答えの有無と合否を正しく出すか確認する
+python3 scripts/test_eval_report.py || status=1
 # PR ルールの確認スクリプトが正しく判定するか確認する
 python3 scripts/test_check_pr.py || status=1
 [ "$status" -eq 0 ] && echo "check: ok"

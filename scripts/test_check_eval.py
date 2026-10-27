@@ -147,6 +147,17 @@ def main():
     var = copy.deepcopy(good["8"])
     put(var, 3, 2, 5, "WM(Z,LCtrl)")
     ok("8: 空白なしでも合格", check("8", var, cases) == [])
+    # 条件の側の書き方が揺れていても同じキーと見なす
+    loose = copy.deepcopy(cases)
+    for cond in loose["cases"]["6"]["conditions"]:
+        if cond["type"] == "positions":
+            cond["keys"] = ["WM(Left,LShift)", *cond["keys"][1:]]
+    var = copy.deepcopy(good["6"])
+    row = next(c for c in cases["cases"]["6"]["conditions"] if c["type"] == "positions")
+    for layer in var["layers"]:
+        if [layer["keys"][row["row"] - 1][c - 1] for c in row["cols"]] == row["keys"]:
+            layer["keys"][row["row"] - 1][row["cols"][0] - 1] = "WM(Left, LShift)"
+    ok("6: 条件の WM(Left,LShift) とキーマップの WM(Left, LShift) を同じと見なす", check("6", var, loose) == [])
     # 4 行目は 6 番目より右がマトリクスで 1 つずれる
     blk = copy.deepcopy(starts["default"])
     for r, row in ((2, ["Kp7", "Kp8", "Kp9"]), (3, ["Kp4", "Kp5", "Kp6"])):
