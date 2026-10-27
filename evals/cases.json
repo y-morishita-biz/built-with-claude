@@ -1,0 +1,118 @@
+{
+  "about": "docs/eval-cases.md の評価例のうち、キーの位置で判定できる条件。行と列は 1 から数える(4 行目は 11 列)。説明の項目は対象外",
+  "starts": {
+    "default": "examples/dotmatrix40w-rmk-default.json",
+    "mac": "examples/dotmatrix40w-mac.json"
+  },
+  "cases": {
+    "1": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "layer_with_switch", "layers": [3, 4], "switch_cols": [1, 6],
+         "keys": ["WM(Z, LGui)", "B", "E", "V", "LeftBracket", "RightBracket"], "cols": [1, 6],
+         "text": "user1 か user2 の左手側に取り消し・B・E・V・[・] があり、ベースの左手側からそのレイヤーへ切り替えられる"},
+        {"kind": "must_not", "type": "unchanged", "layer": 0, "what": "letters",
+         "text": "ベースレイヤーの文字キーを置き換える"}
+      ]
+    },
+    "2": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "layer_with_switch", "layers": [3, 4], "keys": ["P", "V", "A"],
+         "text": "P・V・A が user1 か user2 にまとまり、ベースから 1 キーで呼び出せる"},
+        {"kind": "must_not", "type": "keys_kept", "layer": 0, "keys": ["MO(1)", "LT(2, Right)"],
+         "text": "既存のレイヤー切り替えキー(MO(1)、LT(2, Right))を消す"}
+      ]
+    },
+    "3": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "block", "rows": [["Kp7", "Kp8", "Kp9"], ["Kp4", "Kp5", "Kp6"], ["Kp1", "Kp2", "Kp3"]],
+         "text": "Kp1〜Kp9 がテンキーの並び(上段が 7 8 9)で押せるレイヤーがある"},
+        {"kind": "must_not", "type": "no_block", "rows": [["Kp1", "Kp2", "Kp3"], ["Kp4", "Kp5", "Kp6"], ["Kp7", "Kp8", "Kp9"]],
+         "text": "電話式の並び(上段が 1 2 3)にする"}
+      ]
+    },
+    "4": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "encoder", "cw": "Right", "ccw": "Left", "not_layers": [0],
+         "text": "ベース以外のレイヤーでエンコーダが Right / Left になる"},
+        {"kind": "must_not", "type": "encoder_unchanged", "layer": 0,
+         "text": "ベースレイヤーのエンコーダを変える"}
+      ]
+    },
+    "6": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "positions", "row": 2, "cols": [7, 8, 9, 10], "keys": ["Left", "Down", "Up", "Right"],
+         "text": "どれかのレイヤーで 2 行目列 7〜10 が Left Down Up Right になる"},
+        {"kind": "must_not", "type": "unchanged", "layer": 0, "what": [[2, 7], [2, 8], [2, 9], [2, 10]],
+         "text": "ベースの H J K L を置き換える"}
+      ]
+    },
+    "7": {
+      "start": "default",
+      "note": "media の 2 行目にすでにあると案内し、置き場所の変更を提案する答えも合格になりうる。その場合は返答を読んで確かめる",
+      "conditions": [
+        {"kind": "must", "type": "layer_with_keys", "keys": ["WM(C, LCtrl)", "WM(V, LCtrl)"], "rows": [3, 4], "cols": [1, 6],
+         "text": "3 行目か 4 行目の左手側に WM(C, LCtrl) と WM(V, LCtrl) がある"},
+        {"kind": "must_not", "type": "absent", "keys": ["WM(C, LGui)", "WM(V, LGui)"],
+         "text": "Mac 向けの WM(C, LGui) / WM(V, LGui) を使う"}
+      ]
+    },
+    "8": {
+      "start": "default",
+      "conditions": [
+        {"kind": "must", "type": "each_key_somewhere", "keys": ["Enter", "Backspace", "Space", "Escape", "WM(Z, LCtrl)"], "cols": [1, 6],
+         "text": "Enter・Backspace・Space・Escape・WM(Z, LCtrl) が、どれかのレイヤーの左手側にある"},
+        {"kind": "must_not", "type": "no_more_no", "layer": 0, "cols": [7, 12],
+         "text": "ベースの右手側を No で埋める"}
+      ]
+    },
+    "M3": {
+      "start": "mac",
+      "conditions": [
+        {"kind": "must", "type": "block", "rows": [["Kp7", "Kp8", "Kp9"], ["Kp4", "Kp5", "Kp6"], ["Kp1", "Kp2", "Kp3"]],
+         "text": "Kp1〜Kp9 がテンキーの並び(上段が 7 8 9)で押せるレイヤーがある"},
+        {"kind": "must_not", "type": "unchanged", "layer": 0, "what": "letters",
+         "text": "ベースの文字キーを置き換える"},
+        {"kind": "must_not", "type": "no_block", "rows": [["Kp1", "Kp2", "Kp3"], ["Kp4", "Kp5", "Kp6"], ["Kp7", "Kp8", "Kp9"]],
+         "text": "電話式の並び(上段が 1 2 3)にする"}
+      ]
+    },
+    "M6": {
+      "start": "mac",
+      "conditions": [
+        {"kind": "must", "type": "positions", "row": 2, "cols": [7, 8, 9, 10], "keys": ["Left", "Down", "Up", "Right"],
+         "text": "どれかのレイヤーで 2 行目列 7〜10 が Left Down Up Right になる"},
+        {"kind": "must_not", "type": "unchanged", "layer": 0, "what": [[2, 7], [2, 8], [2, 9], [2, 10]],
+         "text": "ベースの H J K L を置き換える"},
+        {"kind": "must_not", "type": "keys_kept", "layer": 0, "keys": ["Up", "Left", "Down", "Right"],
+         "text": "ベースの右下の矢印キーを消す"}
+      ]
+    },
+    "M7": {
+      "start": "mac",
+      "conditions": [
+        {"kind": "must", "type": "layer_with_keys", "keys": ["WM(C, LGui)", "WM(V, LGui)"], "rows": [3, 4], "cols": [1, 6],
+         "text": "3 行目か 4 行目の左手側に WM(C, LGui) と WM(V, LGui) がある"},
+        {"kind": "must_not", "type": "absent", "keys": ["WM(C, LCtrl)", "WM(V, LCtrl)"],
+         "text": "Windows 向けの WM(C, LCtrl) / WM(V, LCtrl) を使う"},
+        {"kind": "must_not", "type": "unchanged", "layer": 0, "what": [[3, 2], [3, 3], [3, 4], [3, 5]],
+         "text": "ベースの Z X C V を置き換える"}
+      ]
+    },
+    "M8": {
+      "start": "mac",
+      "conditions": [
+        {"kind": "must", "type": "each_key_somewhere", "keys": ["Enter", "Backspace", "Space", "WM(Z, LGui)"], "cols": [1, 6],
+         "text": "Enter・Backspace・Space・WM(Z, LGui) が、どれかのレイヤーの左手側にある"},
+        {"kind": "must_not", "type": "no_more_no", "layer": 0, "cols": [7, 12],
+         "text": "ベースの右手側を No で埋める"},
+        {"kind": "must_not", "type": "keys_kept", "layer": 1, "keys": ["Escape"],
+         "text": "fn の Escape を消す"}
+      ]
+    }
+  }
+}
